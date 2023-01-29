@@ -36,5 +36,30 @@ RSpec.describe Purchase do
         }
       ])
     end
+
+    it "Should add multiple items in the list" do
+      purchase = Purchase.new
+      purchase.add("2 book at 12.49")
+      purchase.add("1 imported bottle of perfume at 47.50")
+      purchase.add("3 boxes of chocolate at 11.25")
+
+      expect(purchase.send(:items)).to eq([
+        {
+          "product": "book",
+          "price": 12.49,
+          "amount": 2
+        },
+        {
+          "product": "imported bottle of perfume",
+          "price": 47.50,
+          "amount": 1
+        },
+        {
+          "product": "boxes of chocolate",
+          "price": 11.25,
+          "amount": 3
+        }
+      ])
+    end
   end
 end

@@ -26,7 +26,7 @@ class Purchase
 
     {
       "amount": amount.to_i,
-      "product": product.join,
+      "product": product.join(" "),
       "price": item_splitted[1].to_f
     }
   end
