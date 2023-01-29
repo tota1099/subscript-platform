@@ -4,6 +4,13 @@ class Purchase
 
   attr_accessor :items
 
+  TAX_EXCEPTIONS = [
+    "book",
+    "chocolate bar",
+    "imported box of chocolate",
+    "packet of headache pills"
+  ].freeze
+
   def initialize
     @items = []
   end
@@ -16,12 +23,12 @@ class Purchase
 
   def extract
     items_string = @items.map do |item|
-      item_price = (item[:price] * item[:amount])
-      "#{item[:amount]} #{item[:product]}: #{sprintf('%.2f', item_price)}" 
+      price_with_tax = item[:basic_tax] + item[:total_price]
+      "#{item[:amount]} #{item[:product]}: #{sprintf('%.2f', price_with_tax)}" 
     end
-    total = @items.map { |item| item[:price] * item[:amount] }.sum
+    total = @items.map { |item| item[:basic_tax] + item[:total_price] }.sum
 
-    "#{items_string.join("\n")}\nTotal: #{total}"
+    "#{items_string.join("\n")}\nTotal: #{sprintf('%.2f', total)}"
   end
 
   private
@@ -34,10 +41,19 @@ class Purchase
     item_splitted = item.split(" at ")
     amount, *product = item_splitted[0].split()
 
-    {
+    product_object = {
       "amount": amount.to_i,
       "product": product.join(" "),
-      "price": item_splitted[1].to_f
+      "price": item_splitted[1].to_f,
+      "total_price": item_splitted[1].to_f * amount.to_i,
+      "basic_tax": 0
     }
+
+    unless TAX_EXCEPTIONS.include?(product_object[:product])
+      item_price = (product_object[:price] * product_object[:amount])
+      product_object[:basic_tax] = item_price * 0.10
+    end
+
+    product_object
   end
 end

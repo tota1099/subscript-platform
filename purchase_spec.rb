@@ -32,7 +32,9 @@ RSpec.describe Purchase do
         {
           "product": "book",
           "price": 12.49,
-          "amount": 2
+          "amount": 2,
+          "basic_tax": 0,
+          "total_price": 24.98
         }
       ])
     end
@@ -47,17 +49,23 @@ RSpec.describe Purchase do
         {
           "product": "book",
           "price": 12.49,
+          "basic_tax": 0,
+          "total_price": 24.98,
           "amount": 2
         },
         {
           "product": "imported bottle of perfume",
           "price": 47.50,
+          "basic_tax": 4.75,
+          "total_price": 47.50,
           "amount": 1
         },
         {
           "product": "boxes of chocolate",
           "price": 11.25,
-          "amount": 3
+          "amount": 3,
+          "basic_tax": 3.375,
+          "total_price": 33.75,
         }
       ])
     end
@@ -72,9 +80,9 @@ RSpec.describe Purchase do
 
       expect(purchase.extract).to eq(
         "2 book: 24.98" + "\n" +
-        "1 imported bottle of perfume: 47.50" + "\n" +
-        "3 boxes of chocolate: 33.75" + "\n" +
-        "Total: 106.23"
+        "1 imported bottle of perfume: 52.25" + "\n" +
+        "3 boxes of chocolate: 37.12" + "\n" +
+        "Total: 114.36"
       )
     end
   end
