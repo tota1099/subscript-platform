@@ -23,5 +23,18 @@ RSpec.describe Purchase do
       purchase = Purchase.new
       expect(purchase.add("2 book at 12.49")).to eq(true)
     end
+
+    it "Should add item in the list" do
+      purchase = Purchase.new
+      purchase.add("2 book at 12.49")
+
+      expect(purchase.send(:items)).to eq([
+        {
+          "product": "book",
+          "price": 12.49,
+          "amount": 2
+        }
+      ])
+    end
   end
 end
