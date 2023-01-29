@@ -33,8 +33,9 @@ RSpec.describe Purchase do
           "product": "book",
           "price": 12.49,
           "amount": 2,
+          "total_price": 24.98,
           "basic_tax": 0,
-          "total_price": 24.98
+          "import_tax": 0
         }
       ])
     end
@@ -51,14 +52,16 @@ RSpec.describe Purchase do
           "price": 12.49,
           "basic_tax": 0,
           "total_price": 24.98,
-          "amount": 2
+          "amount": 2,
+          "import_tax": 0
         },
         {
           "product": "imported bottle of perfume",
           "price": 47.50,
           "basic_tax": 4.75,
           "total_price": 47.50,
-          "amount": 1
+          "amount": 1,
+          "import_tax": 2.375
         },
         {
           "product": "boxes of chocolate",
@@ -66,6 +69,7 @@ RSpec.describe Purchase do
           "amount": 3,
           "basic_tax": 3.375,
           "total_price": 33.75,
+          "import_tax": 0
         }
       ])
     end

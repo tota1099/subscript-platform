@@ -41,19 +41,28 @@ class Purchase
     item_splitted = item.split(" at ")
     amount, *product = item_splitted[0].split()
 
-    product_object = {
-      "amount": amount.to_i,
-      "product": product.join(" "),
-      "price": item_splitted[1].to_f,
-      "total_price": item_splitted[1].to_f * amount.to_i,
-      "basic_tax": 0
+    amount = amount.to_i
+    product = product.join(" ")
+    price = item_splitted[1].to_f
+    total_price = price * amount
+
+    item = {
+      "amount": amount,
+      "product": product,
+      "price": price,
+      "total_price": total_price,
+      "basic_tax": 0,
+      "import_tax": 0
     }
 
-    unless TAX_EXCEPTIONS.include?(product_object[:product])
-      item_price = (product_object[:price] * product_object[:amount])
-      product_object[:basic_tax] = item_price * 0.10
+    unless TAX_EXCEPTIONS.include?(item[:product])
+      item[:basic_tax] = item[:total_price] * 0.10
     end
 
-    product_object
+    if item[:product].include? "imported"
+      item[:import_tax] = item[:total_price] * 0.05
+    end
+
+    item
   end
 end
