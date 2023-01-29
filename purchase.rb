@@ -14,6 +14,16 @@ class Purchase
     return true
   end
 
+  def extract
+    items_string = @items.map do |item|
+      item_price = (item[:price] * item[:amount])
+      "#{item[:amount]} #{item[:product]}: #{sprintf('%.2f', item_price)}" 
+    end
+    total = @items.map { |item| item[:price] * item[:amount] }.sum
+
+    "#{items_string.join("\n")}\nTotal: #{total}"
+  end
+
   private
 
   def validate_format(string)
