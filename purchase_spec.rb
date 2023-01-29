@@ -8,7 +8,15 @@ RSpec.describe Purchase do
 
       expect {
         purchase.add("")
-      }.to raise_error(WrongFormat)
+      }.to raise_error(WrongFormat, "Wrong format!")
+    end
+
+    it "Should throw PurchaseError::WrongFormat if try to add wrong format string" do
+      purchase = Purchase.new
+
+      expect {
+        purchase.add("any format")
+      }.to raise_error(WrongFormat, "Wrong format!")
     end
   end
 end
