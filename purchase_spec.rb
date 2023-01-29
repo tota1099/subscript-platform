@@ -18,5 +18,10 @@ RSpec.describe Purchase do
         purchase.add("any format")
       }.to raise_error(WrongFormat, "Wrong format!")
     end
+
+    it "Should add item if try to add with correct format" do
+      purchase = Purchase.new
+      expect(purchase.add("2 book at 12.49")).to eq(true)
+    end
   end
 end
