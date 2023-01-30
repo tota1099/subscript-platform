@@ -88,6 +88,11 @@ RSpec.describe Purchase do
   end
 
   describe "Extract" do
+    it "Should return no items added if call extract without add any item" do
+      purchase = Purchase.new
+      expect(purchase.extract).to eq("No items added!")
+    end
+
     it "Should show the products with correct format" do
       purchase = Purchase.new
       purchase.add("2 book at 12.49")

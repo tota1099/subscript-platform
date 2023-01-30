@@ -22,6 +22,10 @@ class Purchase
   end
 
   def extract
+    if @items.empty?
+      return "No items added!"
+    end
+
     items_string = @items.map do |item|
       price_with_tax = item[:total_tax] + item[:total_price]
       "#{item[:amount]} #{item[:product]}: #{sprintf('%.2f', price_with_tax)}" 
@@ -29,7 +33,9 @@ class Purchase
     total = @items.map { |item| item[:total_tax] + item[:total_price] }.sum
     total_tax = @items.map { |item| item[:total_tax] }.sum
 
-    "#{items_string.join("\n")}\nSales Taxes: #{sprintf('%.2f', total_tax)}\nTotal: #{sprintf('%.2f', total)}"
+    "#{items_string.join("\n")}\n" +
+    "Sales Taxes: #{sprintf('%.2f', total_tax)}\n" +
+    "Total: #{sprintf('%.2f', total)}"
   end
 
   private
