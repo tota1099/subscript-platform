@@ -1,22 +1,30 @@
-require './purchase.rb'
-require './errors.rb'
+require './lib/purchase.rb'
+require './lib/errors.rb'
 
 RSpec.describe Purchase do
   describe "Add item" do
     it "Should throw PurchaseError::WrongFormat if try to add empty string" do
       purchase = Purchase.new
 
+      error_message = "Wrong format! The correct format is: \n" +
+                      "{amount} {product name} at {price}. \n\n" +
+                      "Example: 3 boxes of chocolate at 11.25"
+
       expect {
         purchase.add("")
-      }.to raise_error(WrongFormat, "Wrong format!")
+      }.to raise_error(WrongFormat, error_message)
     end
 
     it "Should throw PurchaseError::WrongFormat if try to add wrong format string" do
       purchase = Purchase.new
 
+      error_message = "Wrong format! The correct format is: \n" +
+                      "{amount} {product name} at {price}. \n\n" +
+                      "Example: 3 boxes of chocolate at 11.25"
+
       expect {
         purchase.add("any format")
-      }.to raise_error(WrongFormat, "Wrong format!")
+      }.to raise_error(WrongFormat, error_message)
     end
 
     it "Should add item if try to add with correct format" do
