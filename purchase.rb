@@ -7,7 +7,7 @@ class Purchase
   TAX_EXCEPTIONS = [
     "book",
     "chocolate bar",
-    "imported box of chocolate",
+    "imported boxes of chocolates",
     "packet of headache pills"
   ].freeze
 
@@ -23,12 +23,13 @@ class Purchase
 
   def extract
     items_string = @items.map do |item|
-      price_with_tax = item[:basic_tax] + item[:total_price]
+      price_with_tax = item[:total_tax] + item[:total_price]
       "#{item[:amount]} #{item[:product]}: #{sprintf('%.2f', price_with_tax)}" 
     end
-    total = @items.map { |item| item[:basic_tax] + item[:total_price] }.sum
+    total = @items.map { |item| item[:total_tax] + item[:total_price] }.sum
+    total_tax = @items.map { |item| item[:total_tax] }.sum
 
-    "#{items_string.join("\n")}\nTotal: #{sprintf('%.2f', total)}"
+    "#{items_string.join("\n")}\nSales Taxes: #{sprintf('%.2f', total_tax)}\nTotal: #{sprintf('%.2f', total)}"
   end
 
   private
@@ -63,6 +64,12 @@ class Purchase
       item[:import_tax] = item[:total_price] * 0.05
     end
 
+    item[:total_tax] = round_05(item[:import_tax] + item[:basic_tax])
+
     item
+  end
+
+  def round_05(value)
+    (value * 20.0).round / 20.0
   end
 end
