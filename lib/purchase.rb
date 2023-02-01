@@ -63,19 +63,24 @@ class Purchase
     }
 
     unless TAX_EXCEPTIONS.include?(item[:product])
-      item[:basic_tax] = item[:total_price] * 0.10
+      item[:basic_tax] = item[:price] * 0.10
     end
 
     if item[:product].include? "imported"
-      item[:import_tax] = item[:total_price] * 0.05
+      item[:import_tax] = item[:price] * 0.05
     end
 
-    item[:total_tax] = round_05(item[:import_tax] + item[:basic_tax])
+    item[:total_tax] = calculate_total_tax(item)
 
     item
   end
 
+  def calculate_total_tax(item)
+    total_tax = round_05(item[:import_tax] + item[:basic_tax])
+    (total_tax * item[:amount]).round(2)
+  end
+
   def round_05(value)
-    (value * 20.0).round / 20.0
+    (value * 20.0).ceil / 20.0
   end
 end

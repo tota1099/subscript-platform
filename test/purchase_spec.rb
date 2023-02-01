@@ -44,7 +44,7 @@ RSpec.describe Purchase do
           "total_price": 24.98,
           "basic_tax": 0,
           "import_tax": 0,
-          "total_tax": 0.0
+          "total_tax": 0
         }
       ])
     end
@@ -63,7 +63,7 @@ RSpec.describe Purchase do
           "total_price": 24.98,
           "amount": 2,
           "import_tax": 0,
-          "total_tax": 0
+          "total_tax": 0.0
         },
         {
           "product": "imported bottle of perfume",
@@ -78,10 +78,10 @@ RSpec.describe Purchase do
           "product": "boxes of chocolate",
           "price": 11.25,
           "amount": 3,
-          "basic_tax": 3.375,
+          "basic_tax": 1.125,
           "total_price": 33.75,
           "import_tax": 0,
-          "total_tax": 3.4
+          "total_tax": 3.45
         }
       ])
     end
@@ -128,9 +128,9 @@ RSpec.describe Purchase do
         "1 imported bottle of perfume: 32.19" + "\n" +
         "1 bottle of perfume: 20.89" + "\n" +
         "1 packet of headache pills: 9.75" + "\n" +
-        "3 imported boxes of chocolates: 35.45" + "\n" +
-        "Sales Taxes: 7.80" + "\n" +
-        "Total: 98.28"
+        "3 imported boxes of chocolates: 35.55" + "\n" +
+        "Sales Taxes: 7.90" + "\n" +
+        "Total: 98.38"
       )
     end
   end
